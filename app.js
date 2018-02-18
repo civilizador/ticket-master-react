@@ -7,7 +7,7 @@
 
 //APP CONFIG
     //Connecting to DB and Creating a DATABASE NAMED "blog"
-mongoose.connect("mongodb://127.0.0.1:27017/shift");
+mongoose.connect("mongodb://localhost/shift");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
