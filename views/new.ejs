@@ -1,0 +1,64 @@
+<% include partials/header %>
+<div class="ui main text container segment">
+    <div class="ui huge header">
+       Create a new Ticket
+    </div>
+    <!--Creating a "NEW BLOG POST" form which will be submited as a POST request to /blogs("INDEX" route) -->
+    <form class="ui form" action="/tickets" method="POST">
+    
+        <div class="field">
+            <label>Ticket Number</label>
+                <input  type=text name="ticket[ticket]" placeholder="ticket number">
+        </div>
+    
+        <div class="field">
+            <label>FQDN</label>
+                <input type=text  placeholder="image URL" name="ticket[fqdn]">
+        </div>
+    
+        <div class="field">
+            <label>Ticket State</label>
+                <input  type=text  placeholder="Ticket State" name="ticket[state]">  
+        </div>
+        
+        <div class="field">
+            <label>Carrier information</label>
+                <input   type=text placeholder="Carrier information" name="ticket[carrier]">  
+        </div>
+        
+        <div class="field">
+            <label>Last Action</label>
+                <input   type=text placeholder="Last Action" name="ticket[last]"> 
+        </div>
+        
+        <div class="field">
+            <label>Next Action</label>
+                <input   type=text placeholder="Next Action"  name="ticket[next]"> 
+        </div>
+        
+        <div class="field">
+            <label>Ticket owner</label>
+                <input   type=text placeholder="Ticket owner" name="ticket[owner]">  
+        </div>
+        
+         <div class="field">
+            <label>Ticket was last updated at:</label>
+                <input   type=text  name="ticket[updated]">   
+        </div>
+        
+        <div class="field">
+            <label>Notes</label>
+                <textarea  name="ticket[notes]"> </textarea>
+        </div>
+        
+        
+            <input type="submit" class="positive ui big button">
+          
+    </form>
+    
+</div>
+
+
+
+
+<% include partials/footer %>

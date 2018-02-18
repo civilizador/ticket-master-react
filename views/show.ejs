@@ -1,0 +1,59 @@
+<% include partials/header %>
+
+
+<div class="ui main  container segment">
+    
+    <div class="ui container huge header">
+        <h1><%= ticket.ticket %> </h1>
+    </div>
+    
+    <div class="ui top attached segment">
+        <div class="item"> 
+               
+                <div class="item segment">
+                    <div class="content"> 
+                    <span style="text-decoration: underline"><em><%= ticket.created.toDateString() %></span> </em> 
+                    </div> 
+                </div>
+                
+                <div class="description">
+                   <span>FQDN: </span>   <h3 class="fields"><%= ticket.fqdn %></h3>
+                </div>
+                
+                <div class="description">
+                 <span>State: </span>  <h3 class="fields"><%= ticket.state %></h3>
+                </div>
+                
+                <div class="description">
+                    <span>Carrier: </span> <h3 class="fields"><%= ticket.carrier %></h3>
+                </div>
+                
+                <div class="description">
+                    <span>Last Action: </span> <h3 class="fields"><%= ticket.last %></h3>
+                </div>
+                
+                <div class="description">
+                     <span>Next Action:  </span> <h3 class="fields"><%= ticket.next %></h3>
+                </div>
+                
+                
+                <div class="description">
+                     <span>Ticket owner: </span>  <h3 class="fields"><%= ticket.owner %></h3>
+                </div>
+                <div class="description">
+                     <span>Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3>
+                </div>
+                
+                <div class="description">
+                     <span>Last Updated: </span>  <h3 class="fields"><%= ticket.updated %></h3>
+                </div>
+              <a href="/tickets/<%=ticket._id%>/edit" class="ui olive button">Edit ticket</a>
+                <form style="display: inline" action="/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
+                        <button  class="ui red button">Delete ticket</button>
+                    </form>
+            </div>      
+      
+    </div>
+
+</div>
+<% include partials/footer %>
