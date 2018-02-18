@@ -7,7 +7,7 @@
 
 //APP CONFIG
     //Connecting to DB and Creating a DATABASE NAMED "blog"
-mongoose.connect("mongodb://localhost/shift");
+mongoose.connect("mongodb://civilizador:Asimssoft1@ds239648.mlab.com:39648/heroku_tfnzlrqt");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
