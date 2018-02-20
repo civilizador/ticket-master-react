@@ -26,7 +26,7 @@ var shiftSchema = new mongoose.Schema
         last: String,
         next: String,
         owner: String,
-        updated: {type: Date, default: Date.now},
+        updated: String,
         notes: String
         // we will use a default value each time blog created it will post creation time.
     }
@@ -78,7 +78,24 @@ var Shift = mongoose.model("Shift", shiftSchema);
     else{ res.render("monitoring",{tickets: tickets}); }
          });
     });
+    
+     //1c. INDEX ROUTE - Working Tickets
+    
+        app.get("/tickets/working",function(req,res)
+    {   Shift.find({}, function(err, tickets)
+    {if(err) {throw err}
+    else{ res.render("working",{tickets: tickets}); }
+         });
+    });
 
+      //1d. INDEX ROUTE - Working Tickets
+        
+            app.get("/tickets/email",function(req,res)
+        {   Shift.find({}, function(err, tickets)
+        {if(err) {throw err}
+        else{ res.render("email",{tickets: tickets}); }
+             });
+        });
     //2. "NEW" ROUTE
     app.get("/tickets/new",function(req, res) {
         res.render("new");

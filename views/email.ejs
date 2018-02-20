@@ -2,7 +2,7 @@
  
   <!--Listing all tickets using forEach loop-->
 <% tickets.forEach(function(ticket){ %>
-    <% if(ticket.state == "monitoring") { %>
+    <% if(ticket.state == "email") { %>
     <div  class="ui container main">
         <div class="item">
             <div class="ui container huge header">
@@ -22,7 +22,7 @@
         </div>
                <!--Ticket Status-->
          <div class="description">
-            <span>Ticket status: </span><h3 style="color: orange" class="fields"> <%= ticket.state %>  </h3>
+            <span>Ticket status: </span><h3 style="color: #bae0a1" class="fields"> <%= ticket.state %>  </h3>
         </div>
         <!--Ticket Carier Information-->
         <div class="description">

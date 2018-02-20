@@ -18,7 +18,13 @@
     
         <div class="field">
             <label>Ticket State</label>
-                <input  type=text  placeholder="Ticket State" name="ticket[state]">  
+                <select name="ticket[state]">
+                  <option value="external">External</option>
+                  <option value="monitoring">Monitoring</option>
+                  <option value="email">E-mail</option>
+                  <option value="working">Working</option>
+                </select>
+                
         </div>
         
         <div class="field">

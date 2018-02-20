@@ -2,7 +2,7 @@
  
   <!--Listing all tickets using forEach loop-->
 <% tickets.forEach(function(ticket){ %>
-    <% if(ticket.state == "External") { %>
+    <% if(ticket.state == "external") { %>
     <div  class="ui container main">
         <div class="item">
             <div class="ui container huge header">
@@ -14,7 +14,7 @@
         
          <!--Ticket Creation date-->
         <div class="meta">
-            <span> Created: </span> <%= ticket.created.toDateString() %> 
+            <span> Created: </span> <%= ticket.created %> 
         </div>
          <!--Ticket fqdn-->
         <div >
@@ -22,7 +22,7 @@
         </div>
                <!--Ticket Status-->
          <div class="description">
-            <span>Ticket status: </span><h3 class="fields"> <%= ticket.state %>  </h3>
+            <span>Ticket status: </span><h3 style="color: #588fe8" class="fields"> <%= ticket.state %>  </h3>
         </div>
         <!--Ticket Carier Information-->
         <div class="description">
@@ -46,7 +46,7 @@
         </div>
         <!--Ticket last Update time-->
          <div class="meta">
-            <span> Updated: </span> <h3 class="fields"> <%= ticket.updated.toDateString() %>   </h3>
+            <span> Updated: </span> <h3 class="fields"> <%= ticket.updated %>   </h3>
         </div>
         
         <div class="extra">
