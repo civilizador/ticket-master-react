@@ -6,6 +6,11 @@
     <!--Creating a "NEW BLOG POST" form which will be submited as a POST request to /blogs("INDEX" route) -->
     <form class="ui form" action="/tickets" method="POST">
     
+         <div class="field">
+            <label>Ticket Created</label>
+                <input  type=text name="ticket[created]" placeholder="ticket creation date and time">
+        </div>
+        
         <div class="field">
             <label>Ticket Number</label>
                 <input  type=text name="ticket[ticket]" placeholder="ticket number">
@@ -24,7 +29,6 @@
                   <option value="email">E-mail</option>
                   <option value="working">Working</option>
                 </select>
-                
         </div>
         
         <div class="field">

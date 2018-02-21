@@ -1,17 +1,18 @@
 <% include partials/header %>
- 
+
   <!--Listing all tickets using forEach loop-->
 <% tickets.forEach(function(ticket){ %>
     <div  class="ui container main">
-        <div class="item">
-            <div class="ui container huge header">
-              <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a> 
-            </div>
-        </div>
-        
-    <div class="content">
-        
-         <!--Ticket Creation date-->
+       
+       
+       <div class="panel panel-info">
+  <div class="panel-heading">
+    <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
+  </div>
+  <div class="panel-body">
+       
+             <!--Ticket Creation date-->
+         
         <div class="meta">
             <span> Created: </span> <%= ticket.created %> 
         </div>
@@ -50,9 +51,11 @@
         
         <div class="extra">
     <!--Adding Read More button-->
-    <a class="ui basic orange button" href="/tickets/<%= ticket._id %>">Read More..</a>
+    <a class="ui large basic orange button" href="/tickets/<%= ticket._id %>">Details...</a>
         </div>
                  <hr>
+          </div>
+          
     </div>
   </div>
 </div>
@@ -63,5 +66,6 @@
 
 </div>
 </div>
+
 
  <% include partials/footer %>

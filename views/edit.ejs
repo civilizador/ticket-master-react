@@ -6,6 +6,10 @@
      <!--Creating a "EDIT TICKET" form which will be submited as a POST request to /tickets("INDEX" route) -->
     <form class="ui form" action="/tickets/<%=ticket._id%>?_method=PUT" method="POST">
         
+        <div class="field">
+            <label>Ticket Created</label>
+                <input  type=text name="ticket[created]" placeholder="ticket creation date and time" value="<%=ticket.created%>">
+        </div>
         
         <div class="field">
             <label>Ticket Number</label>
@@ -18,10 +22,15 @@
         </div>
     
         <div class="field">
-            <label>Ticket State</label>
-                <input  type=text  placeholder="Ticket State" name="ticket[state]" value="<%=ticket.state%>">  
-        </div>
-        
+        <label>Ticket State</label>
+            <select value="<%=ticket.state%>" name="ticket[state]">
+                  <option value="external">External</option>
+                  <option value="monitoring">Monitoring</option>
+                  <option value="email">E-mail</option>
+                  <option value="working">Working</option>
+            </select>
+        </div>    
+    
         <div class="field">
             <label>Carrier information</label>
                 <input   type=text placeholder="Carrier information" name="ticket[carrier]" value="<%=ticket.carrier%>">  

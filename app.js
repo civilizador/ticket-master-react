@@ -18,7 +18,7 @@ app.use(methodOverride("_method"));
     //Creating Schema for mongodb
 var shiftSchema = new mongoose.Schema
 (
-    {    created: {type: Date, default: Date.now},
+    {    created: String,
         ticket: String,
         fqdn:  String,
         state: String,
