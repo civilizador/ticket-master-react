@@ -1,0 +1,19 @@
+                                    TASKS to acomplish in this version.
+
+:   COMMENTS    :
+1. Create a comment model
+2. Using reference method add comment support
+3. Associate each created comment with user that was creating it
+4. 
+
+
+:   AUTH    :
+
+1. Install all nescessary NPMs (including passport js)
+2. Set up a passport.js
+3. create a user schema
+4. Implement user auth.
+5. Insert middleware o check if user is logged including
+6. Make login or signup to disappear when user logged including
+7. Associate created tickets with ticket owner user
+8.
