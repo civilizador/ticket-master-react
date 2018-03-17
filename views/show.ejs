@@ -1,20 +1,25 @@
 <% include partials/header %>
 
-
 <div style="font-size: 2em;" class="ui main container ">
-    
-     <div class="panel panel-info">
-  <div class="panel-heading">
-    <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
-  </div>
-  <div class="panel-body">
+
+<div class="ui raised segment">
       
-               
-                <div class="item segment">
+   <% if (ticket.state==="monitoring") { %>
+    <div class="panel-heading" style="background-color:  #f7cc56;">
+   <% }  else if (ticket.state==="external") { %> 
+    <div class="panel-heading" style="background-color:  #bce8f1;">
+   <% } else { %> 
+    <div class="panel-heading" style="background-color:  #eab9c2;">
+   <% }  %>  
+      
+        <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
+        </div>
+            <div class="panel-body" style="font-size: 1.5em">
+      
                     <div class="content"> 
-                    <span style="text-decoration: underline"><em><%= ticket.created %></span> </em> 
+                    <span style="text-decoration: underline">Created: <em><%= JSON.stringify(ticket.created).substring(1, 11) %></span> </em> 
                     </div> 
-                </div>
+               
                 
                 <div class="description">
                    <span>FQDN: </span>   <h3 class="fields"><%= ticket.fqdn %></h3>
@@ -40,21 +45,78 @@
                 <div class="description">
                      <span>Ticket owner: </span>  <h3 class="fields"><%= ticket.owner %></h3>
                 </div>
+                
                 <div class="description">
                      <span>Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3>
                 </div>
                 
                 <div class="description">
-                     <span>Last Updated: </span>  <h3 class="fields"><%= ticket.updated %></h3>
+                     <span>Last Updated: </span>  <h3 class="fields"><%= JSON.stringify(ticket.updated).substring(1, 11) ; %></h3>
                 </div>
-              <a href="/tickets/<%=ticket._id%>/edit" class="ui olive button">Edit ticket</a>
+                
+                <a href="/tickets/<%=ticket._id%>/edit" class="ui olive button">Edit ticket</a>
+                
                 <form style="display: inline" action="/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
                         <button  class="ui red button">Delete ticket</button>
-                    </form>
-            </div>      
-         </div> 
-             
-    </div>
-
+                </form>
+            
+            </div> 
+        
 </div>
+            
+                <!-- COMMENTS -->
+                
+    <div class="ui raised segment">
+                    <!-- displaying all comments -->
+        <div style="font-size: 1.5em;" class="ui feed">
+            
+        <% ticket.comments.forEach(function(comments){%>
+            <div  class="event">
+                <div class="label">
+                    <h4> <i class="comment alternate outline icon"></i> </h4>
+                </div>
+                
+                <div class="content">
+                        <!--//     AUTHOR STAMP on the COMMENT PRINT OUT-->
+                        
+                    <div class="summary">
+                       <h3 style="font-family: Times; color: #5776a8;"> <%= comments.author.username %>  </h3>
+                    </div>
+                    
+                    <div class="date">
+                        <!--//     TIME STAMPS ON THE COMMENTS in Eastern time. .getHours() gives time in UTC so we -4 from .getHours() result. -->
+                        
+                       <strong> Created on: <%= comments.created.getMonth() %> - <%= comments.created.getDay()%> -
+                                <%= comments.created.getFullYear() %>  at  <%= comments.created.getHours() - 4%> : 
+                                <%= comments.created.getMinutes()%></strong>
+                    </div>
+                    
+                    <div class="extra text">
+                        <strong> <%= comments.text %> : </strong>
+                    </div>
+                </div> 
+                
+                
+            </div>
+        <% }); %>      
+        </div>      
+            <!-- add comment form -->
+           
+            <div class="ui form">
+                <form  style="margin-bottom:7%;" action="/tickets/<%=ticket._id%>/comments/" method="POST">
+                <br>  
+                    <div  class="field">
+                        <h4 style="text-align: center;">Post a new update on the ticket : </h4>
+                    <textarea  style="margin-left: 5%; width: 90%;" rows="15" name="comment[text]" ></textarea>
+                    <button style="margin-right: 5%;" class="btn btn-sm btn-success pull-right" >Submit</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        
+        </div>
+    </div>
+     </div>
+     
 <% include partials/footer %>

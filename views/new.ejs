@@ -5,20 +5,20 @@
     </div>
     <!--Creating a "NEW BLOG POST" form which will be submited as a POST request to /blogs("INDEX" route) -->
     <form class="ui form" action="/tickets" method="POST">
-    
+   <% var timedate=Date.now; %>
          <div class="field">
             <label>Ticket Created</label>
-                <input  type=text name="ticket[created]" placeholder="ticket creation date and time">
+                <input   required type=date name="ticket[created]">
         </div>
         
         <div class="field">
             <label>Ticket Number</label>
-                <input  type=text name="ticket[ticket]" placeholder="ticket number">
+                <input required type=text name="ticket[ticket]" placeholder="ticket number">
         </div>
     
         <div class="field">
             <label>FQDN</label>
-                <input type=text  placeholder="image URL" name="ticket[fqdn]">
+                <input required type=text  placeholder="image URL" name="ticket[fqdn]">
         </div>
     
         <div class="field">
@@ -43,19 +43,18 @@
         
         <div class="field">
             <label>Next Action</label>
-                <input   type=text placeholder="Next Action"  name="ticket[next]"> 
+                <input required   type=text placeholder="Next Action"  name="ticket[next]"> 
         </div>
         
         <div class="field">
             <label>Ticket owner</label>
-                <input   type=text placeholder="Ticket owner" name="ticket[owner]">  
+                <input  readonly="readonly" type=text placeholder="Ticket owner" name="ticket[owner]" value="<%= currentUser.username %>">  
         </div>
-        
-         <div class="field">
+        <div class="field">
             <label>Ticket was last updated at:</label>
-                <input   type=text  name="ticket[updated]">   
+               <input   type=text  name="ticket[updated]" value="<%= Date().substring(0, 16) ; %>">   
         </div>
-        
+         
         <div class="field">
             <label>Notes</label>
                 <textarea  name="ticket[notes]"> </textarea>

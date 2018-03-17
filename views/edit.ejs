@@ -8,7 +8,7 @@
         
         <div class="field">
             <label>Ticket Created</label>
-                <input  type=text name="ticket[created]" placeholder="ticket creation date and time" value="<%=ticket.created%>">
+                <input readonly="readonly"  type=text name="ticket[created]" placeholder="ticket creation date and time" value="<%=JSON.stringify(ticket.created).substring(1, 11) %>">
         </div>
         
         <div class="field">
@@ -48,12 +48,16 @@
         
         <div class="field">
             <label>Ticket owner</label>
-                <input   type=text placeholder="Ticket owner" name="ticket[owner]" value="<%=ticket.owner%>">  
+               <select name="ticket[owner]">
+              <option value="<%=ticket.owner%>"><%=ticket.owner%></option>
+              <option value="<%= currentUser.username %>"><%= currentUser.username %></option>
+               </select>
+                 
         </div>
         
          <div class="field">
             <label>Ticket was last updated at:</label>
-                <input   type=text  name="ticket[updated]" value="<%=ticket.updated%>">   
+               <input   type=text  name="ticket[updated]" value="<%= Date().substring(0, 16) ; %>">   
         </div>
         
         <div class="field">
