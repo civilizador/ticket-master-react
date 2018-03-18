@@ -11,9 +11,11 @@
                          },
         username: String
     },
-    created: {type: Date, default: Date.now}
+    created: {type: String, default: Date.now  }
        });
 
 module.exports = mongoose.model("Comment", commentSchema);
     
     
+    
+ 

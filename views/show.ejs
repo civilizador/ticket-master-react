@@ -86,9 +86,7 @@
                     <div class="date">
                         <!--//     TIME STAMPS ON THE COMMENTS in Eastern time. .getHours() gives time in UTC so we -4 from .getHours() result. -->
                         
-                       <strong> Created on: <%= comments.created.getMonth() %> - <%= comments.created.getDay()%> -
-                                <%= comments.created.getFullYear() %>  at  <%= comments.created.getHours() - 4%> : 
-                                <%= comments.created.getMinutes()%></strong>
+                       <strong> Created on: <%=  JSON.stringify(comments.created).substring(1, 17)    %>  </strong>
                     </div>
                     
                     <div class="extra text">
