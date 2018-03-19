@@ -1,70 +1,98 @@
 <% include partials/header %>
- 
-  <!--Listing all tickets using forEach loop-->
-<% tickets.forEach(function(ticket){ %>
-    <% if(ticket.state == "monitoring") { %>
-     <div  class="ui container main">
-         <div class="panel panel-info">
-        <div class="panel-heading" style="background-color:  orange;>
-        <h2 class="panel-title">
-            <div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div>
-        </h2>
-      </div>
-  <div class="panel-body">   
-        
-        
-         <!--Ticket Creation date-->
-        <div class="meta">
-            <span> Created: </span> <%= ticket.created %> 
-        </div>
-         <!--Ticket fqdn-->
-        <div >
-             <span>FQDN: </span><h3 class="fields"> <%= ticket.fqdn %>  </h3>
-        </div>
-               <!--Ticket Status-->
-         <div class="description">
-            <span>Ticket status: </span><h3 style="color: orange" class="fields"> <%= ticket.state %>  </h3>
-        </div>
-        <!--Ticket Carier Information-->
-        <div class="description">
-            <span>Carier Information: </span><h3 class="fields"> <%= ticket.carrier %>  </h3>
-        </div>
-        <!--Ticket Last Action-->
-        <div class="description">
-           <span>Ticket Last Action: </span> <h3 class="fields"> <%= ticket.last %>  </h3>
-        </div>
-        <!--Ticket Next Action-->
-        <div class="description">
-            <span>Ticket Next Action: </span> <h3 class="fields"> <%= ticket.next %>  </h3>
-        </div>
-        <!--Ticket Owner-->
-        <div class="description">
-            <span>Ticket Owner: </span> <h3 class="fields"> <%= ticket.owner %>  </h3>
-        </div>
-          <!--Ticket Notes-->
-        <div class="description">
-            <span>Ticket Notes: </span> <h3 class="fields"> <%= ticket.notes.substring(0,70) + "..." %>  </h3>
-        </div>
-        <!--Ticket last Update time-->
-         <div class="meta">
-            <span> Updated: </span> <h3 class="fields"> <%= ticket.updated %>   </h3>
-        </div>
-        
-        <div class="extra">
-    <!--Adding Read More button-->
-      <a class="ui large basic orange button" href="/tickets/<%= ticket._id %>">Details...</a>
-        </div>
-                 <hr>
+    <!-- Main DIV class container -->
+    <div class="container index">
+        <!-- Div class row. Inside of which we will run forEach loop and print all ticket details.-->
+        <div class="row" style="margin-bottom: 40;">
+          
+          <!-- Listing all tickets using forEach loop -->
+            
+            <% tickets.forEach(function(ticket){ %>
+             <% if(ticket.state == "monitoring") { %>
+            <div  class="col-lg-4 col-md-6 col-sm-12">
+                <div class="img-thumbnail">
+                    <div class="panel panel-info">
+                   <!--  <div class="panel-heading">   -->    
+                   <% if (ticket.state==="monitoring") { %>
+                    <div class="panel-heading" style="background-color:  #f7cc56;">
+                   <% }  else if (ticket.state==="external") { %> 
+                    <div class="panel-heading" style="background-color:  #bce8f1;">
+                   <% } else if (ticket.state==="arch") { %> 
+                    <div class="panel-heading" style="background-color:   #e5ad87;">
+                   <% }  %>  
+   <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
+   <!-- End of the <div class="panel-heading">-->       
     </div>
-  </div>
-</div>
-   </div>
-      </div>
-<% }}) %>
+            <div class="panel-body">
+                
+                <!--Ticket Creation date-->
+                <div class="meta">
+                <span> Created: </span>  <%= JSON.stringify(ticket.created).substring(1, 11) %> 
+                </div>
+                
+                <!--Ticket fqdn-->
+                <div>
+                <span>FQDN: </span><h4 class="fields"> <%= ticket.fqdn %>  </h4>
+                </div>
+                
+                <!--Ticket Status-->
+                <div class="description">
+                <span>Ticket status: </span><h4 class="fields"> <%= ticket.state %>  </h4>
+                </div>
+               
+                <!--Ticket Carier Information-->
+                <div class="description">
+                <span> Carier Information: </span><h4 class="fields"> <%= ticket.carrier %>  </h4>
+                </div>
+               
+                <!--Ticket Last Action-->
+                <div class="description">
+                <span>Ticket Last Action: </span> <h4 class="fields"> <%= ticket.last.substring(0,70) + "..." %>  </h4>
+                </div>
+               
+                <!--Ticket Next Action-->
+                <div class="description">
+                <span>Ticket Next Action: </span> <h4 class="fields"> <%= ticket.next.substring(0,70) + "..." %>   </h4>
+                </div>
+               
+                <!--Ticket Owner-->
+                <div class="description">
+                <span>Ticket Owner: </span> <h3 class="fields"> <%= ticket.owner %>  </h3>
+                </div>
+                
+                <!--Ticket Notes-->
+                <div class="description">
+                <span>Ticket Notes: </span> <h4 class="fields"> <%= ticket.notes.substring(0,70) + "..." %>  </h4>
+                </div>
+                
+                <!--Ticket last Update time-->
+                <div class="description">
+                <span> Updated: </span> <h4 class="fields"> <%= JSON.stringify(ticket.updated).substring(1, 11) ;%>   </h4>
+                </div>
+                
+                
+        
+                <div class="extra">
+                <!--Adding Read More button-->
+                <a class="ui large basic orange button" href="/tickets/<%= ticket._id %>">Details...</a>
+                </div>
+                <hr>
+                
+                
+            <!-- End of the <div class="panel panel-body">-->    
+            </div>
+            <!-- End of the <div class="img-thumbnail">-->
+            </div>
+            <!-- End of the <div class="panel panel-info">-->
+            </div>
+            <!-- End of the div  class="col-md-4 col-sm-6" -->
+            </div>   
+<% }%>
+        <% }) %>
+                   
+    <!-- End of the main DIV class row -->
+    </div>
+    <!-- End of the main DIV class container index -->
+    </div>
 
-
-
-</div>
-</div>
 
  <% include partials/footer %>

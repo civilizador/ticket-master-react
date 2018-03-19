@@ -7,9 +7,10 @@
           <!-- Listing all tickets using forEach loop -->
             
             <% tickets.forEach(function(ticket){ %>
+             <% if(ticket.state !== "arch") { %>
             <div  class="col-lg-4 col-md-6 col-sm-12">
                 <div class="img-thumbnail">
-                    <div class="panel panel-info">
+                    <!--<div class="panel panel-info">-->
                   
                    <% if (ticket.state==="monitoring") { %>
                    
@@ -32,7 +33,7 @@
                 
                 <!--Ticket fqdn-->
                 <div>
-                <span>FQDN: </span><h4 class="fields"> <%= ticket.fqdn %>  </h4>
+                <span>FQDN: </span><h4 class="fields"> <%= ticket.fqdn.substring(0,40) + "..."  %>  </h4>
                 </div>
                 
                 <!--Ticket Status-->
@@ -42,7 +43,7 @@
                
                 <!--Ticket Carier Information-->
                 <div class="description">
-                <span> Carier Information: </span><h4 class="fields"> <%= ticket.carrier %>  </h4>
+                <span> Carier Information: </span><h4 class="fields"> <%= ticket.carrier.substring(0,60) + "..."  %>  </h4>
                 </div>
                
                 <!--Ticket Last Action-->
@@ -70,13 +71,12 @@
                 <span> Updated: </span> <h4 class="fields"> <%= JSON.stringify(ticket.updated).substring(1, 11) ;%>   </h4>
                 </div>
                 
-                
-        
+          <br>
                 <div class="extra">
                 <!--Adding Read More button-->
                 <a class="ui large basic orange button" href="/tickets/<%= ticket._id %>">Details...</a>
                 </div>
-                <hr>
+                <br>
                 
                 
             <!-- End of the <div class="panel panel-body">-->    
@@ -84,10 +84,10 @@
             <!-- End of the <div class="img-thumbnail">-->
             </div>
             <!-- End of the <div class="panel panel-info">-->
-            </div>
+            <!--</div>-->
             <!-- End of the div  class="col-md-4 col-sm-6" -->
             </div>   
-
+<% }%>
         <% }) %>
                    
     <!-- End of the main DIV class row -->

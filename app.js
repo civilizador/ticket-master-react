@@ -74,6 +74,16 @@
          });
     });
     
+    //1i. INDEX ROUTE - External Tickets
+    
+        app.get("/tickets/arch",function(req,res)
+    {   Shift.find({}, function(err, tickets)
+    {if(err) {throw err}
+    else{ res.render("arch",{tickets: tickets}); }
+         });
+    });
+    
+    
      //1b. INDEX ROUTE - External Tickets
     
         app.get("/tickets/monitoring",function(req,res)
