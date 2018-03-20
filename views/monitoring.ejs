@@ -10,15 +10,11 @@
              <% if(ticket.state == "monitoring") { %>
             <div  class="col-lg-4 col-md-6 col-sm-12">
                 <div class="img-thumbnail">
-                    <div class="panel panel-info">
+                    <div style=" border-radius: 25px;  " class="panel panel-info">
                    <!--  <div class="panel-heading">   -->    
                    <% if (ticket.state==="monitoring") { %>
-                    <div class="panel-heading" style="background-color:  #f7cc56;">
-                   <% }  else if (ticket.state==="external") { %> 
-                    <div class="panel-heading" style="background-color:  #bce8f1;">
-                   <% } else if (ticket.state==="arch") { %> 
-                    <div class="panel-heading" style="background-color:   #e5ad87;">
-                   <% }  %>  
+                    <div  class="panel-heading" style=" border-radius: 25px; background-color:  #f7cc56;">
+                 <% }  %>  
    <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
    <!-- End of the <div class="panel-heading">-->       
     </div>
