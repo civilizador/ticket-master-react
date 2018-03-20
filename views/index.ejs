@@ -15,11 +15,11 @@
                    <% if (ticket.state==="monitoring") { %>
                    
     <!--  <div class="panel-heading">   -->     
-    <div class="panel-heading" style="background-color:  #f7cc56;">
+    <div class="panel-heading" style="border-radius: 25px; background-color:  #f7cc56;">
    <% }  else if (ticket.state==="external") { %> 
-    <div class="panel-heading" style="background-color:  #bce8f1;">
+    <div class="panel-heading" style="border-radius: 25px; background-color:  #bce8f1;">
    <% } else { %> 
-    <div class="panel-heading" style="background-color:  #eab9c2;">
+    <div class="panel-heading" style="border-radius: 25px; background-color:  #eab9c2;">
    <% }  %>  
    <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
    <!-- End of the <div class="panel-heading">-->       

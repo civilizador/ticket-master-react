@@ -24,8 +24,9 @@
 	.row{display:flex; flex-wrap: wrap; margin: 5px; }
 	.indexpage {width: 250px; height: 150px; }
 	.container.index {width:90%;}
-	.img-thumbnail {height: 650px; border: 2px solid lavender; margin-top: 10%; padding-top: 5px;}
-	span { float: left; display: inline-block; }
+	.img-thumbnail {height: 650px; border: 2px solid lavender; margin-top: 6%; padding-top: 5px; border-radius: 25px;}
+	span { float: left; display: inline-block;font-size: 1em; }
+	
 	</style>
  		</head>
 	<body>
@@ -38,7 +39,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 <!--   <div class="container">  use it if you want nav bar items have padding.-->
  
- 	<div class="container-fluid">
+ <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -49,28 +50,23 @@
       </button>
       <a class="navbar-brand" href="/"><i class="ui ticket icon" aria-hidden="true"></i> Tickets Turnover</a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+   <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="nav-item active"><a href="/tickets/new">Create a New Ticket</a></li>
         <li ><a href="/">All Tickets <span class="sr-only">(current)</span></a></li>
          <li><a href="/tickets/external">External Only</a></li>
            <li><a href="/tickets/monitoring">Under the monitoring</a></li>
-          
-            <li><a href="/tickets/arch">Archived</a></li>
-            </ul>
+             <li><a href="/tickets/arch">Archived</a></li>
+                    </ul>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-          <% if(!currentUser){ %>  
+          
           <li><a href="/login">Login</a></li>
           <li><a href="/register">Register</a></li>
-          
-          <% } else { %>
-          <li><a href="/logout">Logout</a></li>
-          <% } %>
       </ul>
         </li>
       </ul>
