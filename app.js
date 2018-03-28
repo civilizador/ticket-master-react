@@ -9,8 +9,10 @@
     User =             require("./models/usermod"),
     Comment =          require("./models/commod"),    
     mongoose =         require("mongoose"),
+    middleware  = require("./middleware.js"),
+    flash    =         require("connect-flash"),
     passportLocalMongoose = require("passport-local-mongoose");
-    
+     
 //APP CONFIG
 
     //  Connecting to DB 
@@ -40,12 +42,14 @@
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());
     
-        //   Creating a function that will check if there is a username in other words is user loged in or not.
+    app.use(flash()); 
     
+     //   Creating a function that will check if there is a username/i.e is user loged in or not.
     app.use(function(req, res, next){
     res.locals.currentUser = req.user;// req.user will either be empty or contain information about user from the request
-    next();
-                });
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();  }); 
                 
     //  END of PASSPORT configuration
 
@@ -54,17 +58,60 @@
 
 //RESTFULL ROUTES
 
-    //1. INDEX ROUTE
+    
+  //1. INDEX ROUTE
      app.get("/",function(req, res) 
-    {  res.redirect("/tickets");     });
+{ 
+   if(req.query.search)
+   { 
+       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+            
+            Shift.find({ticket: regex}, function(err, tickets)
+                {
+                    if(err) {   throw err   }
+                        else{
+                             res.render("index",{tickets: tickets}); 
+                            }
+               });
+       
+   }
     
-        app.get("/tickets",function(req,res)
-    {   Shift.find({}, function(err, tickets)
-    {if(err) {throw err}
-    else{ res.render("index",{tickets: tickets}); }
-         });
-    });
+        else{
+            Shift.find({}, function(err, tickets)
+                {
+                    if(err) {throw err}
+                    else{ res.render("index",{tickets: tickets}); }
+                });
+            } 
+        
+});
+       app.get("/tickets",function(req, res) 
+{ 
+   if(req.query.search)
+   { 
+       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+            
+            Shift.find({ticket: regex}, function(err, tickets)
+                {
+                    if(err) {   throw err   }
+                        else{
+                             res.render("index",{tickets: tickets}); 
+                            }
+               });
+       
+   }
     
+        else{
+            Shift.find({}, function(err, tickets)
+                {
+                    if(err) {throw err}
+                    else{ res.render("index",{tickets: tickets}); }
+                });
+            } 
+        
+});  
+       
+
       //1i. INDEX ROUTE - External Tickets
     
         app.get("/tickets/external",function(req,res)
@@ -94,12 +141,12 @@
     });
     
     //2. "NEW" ROUTE
-    app.get("/tickets/new", isLoggedIn, function(req, res) {
+    app.get("/tickets/new", middleware.isLoggedIn, function(req, res) {
         res.render("new", {currentUser: req.user}); 
     });
 
     //3. "CREATE" ROUTE - POST request to /tickets
-    app.post("/tickets", isLoggedIn, function(req,res){
+    app.post("/tickets", middleware.isLoggedIn, function(req,res){
         //  create a new ticket.
     
         Shift.create(req.body.ticket, function(err,ticket)
@@ -125,7 +172,7 @@
     //5. "EDIT" ROUTE - will take customer to edit.ejs which contains edit form
                 //foundBlog will contain blog post retrieved from DB by ID. 
             //We will pass it's value to blogToEdit variable that we have on edit.ejs page
-    app.get("/tickets/:id/edit", isLoggedIn, function(req, res) 
+    app.get("/tickets/:id/edit", middleware.isLoggedIn, function(req, res) 
     {     Shift.findById(req.params.id,function(err, foundTicket) 
          {
        if(err) {throw err}
@@ -151,14 +198,16 @@
         Shift.findByIdAndRemove(req.params.id, function(err)
         {    if(err) {throw err}
           //redirect to index route.
-        else {res.redirect("/tickets");}
+        else {res.redirect("/");}
         });
     });
     
-    
-     //  CREATE ROUTE for comments
+                //  COMMENTS ROUTES
+     
+     
+          //  CREATE ROUTE for comments
   
-    app.post("/tickets/:id/comments", isLoggedIn, function(req,res)
+    app.post("/tickets/:id/comments", middleware.isLoggedIn, function(req,res)
     {
         //    looking for camp by ID
         Shift.findById(req.params.id,function (err,foundTicket) 
@@ -201,46 +250,42 @@
         var newUser = new User({username: req.body.username});
         User.register(newUser, req.body.password, function(err, user){
          if(err){
-            console.log(err);
-             res.render("register");
+             req.flash("error", err.message);
+             return res.render("register");
                 }
              passport.authenticate("local")(req, res, function(){
+                  req.flash("success", "Welcome to Shift TO app for CNOC EPCC dear : " + user.username + ".   Please refresh this page for these messages to disappear. " );
              res.redirect("/tickets"); 
               });
             });
         });
    
   
-    //  LOGIN ROUTE
+      //  LOGIN ROUTE
     
-     // show login form
-     
-     app.get("/login",function(req, res) {
-        res.render("login",{currentUser:req.user});
+    //  show login form
+    app.get("/login",function(req, res) {
+              res.render("login",{currentUser:req.user});
     });
     
     // handling login logic
     app.post("/login", passport.authenticate("local", 
         {
-        successRedirect: "/tickets", //build in methods that authenticate user.
-        failureRedirect: "/tickets/login"
+        successRedirect: "/index", //build in methods that authenticate user.
+        failureRedirect: "/login"
         }), function(req, res){
     });
     
     // logout route
-   
+    // logic route
     app.get("/logout", function(req, res){
         req.logout();
-        res.redirect("/tickets");
+        res.redirect("/login");
     });
     
-    //  CHECKS if USER IS LOGED IN?
-    function isLoggedIn(req, res, next){
-                if(req.isAuthenticated()){
-                  return next();
-                    }
-                    res.redirect("/login");
-                }
+    function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
    
-   
+            
 app.listen(process.env.PORT,process.env.IP,function(){console.log("Server had been started")});

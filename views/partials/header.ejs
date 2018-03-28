@@ -60,11 +60,21 @@
                     </ul>
         </li>
       </ul>
-
+  <form action="/" method="GET" class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" name="search" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" value="search" class="btn btn-default">Submit</button>
+      </form>
       <ul class="nav navbar-nav navbar-right">
           
+        <% if(!currentUser){ %>  
           <li><a href="/login">Login</a></li>
           <li><a href="/register">Register</a></li>
+          
+          <% } else { %>
+          <li><a href="/logout">Logout</a></li>
+          <% } %>
       </ul>
         </li>
       </ul>
@@ -85,7 +95,19 @@
 
 
 
-
+  <div class="container">
+        
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
 
 
 	
