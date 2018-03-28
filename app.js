@@ -237,7 +237,7 @@
         });
     });
     
-    //  REGISTER ROUTE
+  //  REGISTER ROUTE
                  
     //   show register form page
         app.get("/register",function(req, res) {
@@ -247,20 +247,31 @@
     //   handle sign up logic
         app.post("/register", function(req, res)
         {
-        var newUser = new User({username: req.body.username});
-        User.register(newUser, req.body.password, function(err, user){
-         if(err){
-             req.flash("error", err.message);
-             return res.render("register");
-                }
-             passport.authenticate("local")(req, res, function(){
-                  req.flash("success", "Welcome to Shift TO app for CNOC EPCC dear : " + user.username + ".   Please refresh this page for these messages to disappear. " );
-             res.redirect("/tickets"); 
-              });
-            });
-        });
+       var newUser = new User({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        avatar: req.body.avatar
+      });
    
-  
+      User.register(newUser, req.body.password, function(err, user) {
+        if (err) {
+          console.log(err.message);
+          return res.render("register", { error: err.message });
+        }
+        passport.authenticate("local")(req, res, function() {
+          req.flash("success", "Welcome to Shift TO" + " " + user.username);
+          res.redirect("/");
+        });
+      });
+     });
+   
+   
+   
+   
+   
+   
+   
       //  LOGIN ROUTE
     
     //  show login form

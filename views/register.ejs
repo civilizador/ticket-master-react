@@ -7,21 +7,34 @@
     <form action="/register" method="POST" style="width: 80 %;" class="ui form">
   <div class="field">
     <label>User Name</label>
-    <input type="text" name="username" placeholder="First Name">
+    <input  required type="text" name="username" placeholder="First Name">
   </div>
   <div class="field">
     <label>Password</label>
-    <input type="text" name="password" placeholder="Last Name">
+    <input  required type="text" name="password" placeholder="Last Name">
   </div>
  
+ <div class="field">
+    <label>email</label>
+    <input  required type="text" name="email" placeholder="Email">
+  </div>
+  
        <div class="field">
         <div>
           <input required type="checkbox"  >
           <label style="padding-top: 3px;">I agree to the Terms and Conditions</label>
         </div>
       </div>
-      <button class="ui button" type="submit">Submit</button>
+    
+ 
+      <div class="g-recaptcha" data-sitekey="6LfHkU8UAAAAAEloQAoHwUgwjkBmiHjUdltNWLoW"></div>
+      <br/>
+   
+ 
+      <input class="ui button" type="submit">
+   
     </form>
+    
     
 </div>
 

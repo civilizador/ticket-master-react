@@ -1,0 +1,13 @@
+1. npm install connect flash --save
+2. go to app.js and add:
+ flash       =      require("connect-flash");
+ 
+ app.use(flash()); 
+    
+     //     AFTER PASSPORT CONFIG ONLY!!!   Creating a function that will check if there is a username/i.e is user loged in or not.
+    app.use(function(req, res, next){
+    res.locals.currentUser = req.user;// req.user will either be empty or contain information about user from the request
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();  }); 
+    
