@@ -298,8 +298,8 @@
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
    function myFunction() {
-    var x = document.getElementById("myInput");
- 
+    var x = document.getElementsByClassName("myInput");
+  var y = document.getElementsByClassName("check");
     if (x.type === "password") {
         x.type = "text";
     } else {
