@@ -282,7 +282,7 @@
     // handling login logic
     app.post("/login", passport.authenticate("local", 
         {
-        successRedirect: "/index", //build in methods that authenticate user.
+        successRedirect: "/", //build in methods that authenticate user.
         failureRedirect: "/login"
         }), function(req, res){
     });
@@ -297,6 +297,15 @@
     function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
-   
+   function myFunction() {
+    var x = document.getElementById("myInput");
+ 
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
             
 app.listen(process.env.PORT,process.env.IP,function(){console.log("Server had been started")});
