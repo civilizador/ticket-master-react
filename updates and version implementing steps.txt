@@ -1,0 +1,8 @@
+Adding authentication support
+
+//  1. Create 2 new files: login.ejs register.ejs in views dir
+//  2. Install passport, passport-local, passport-local-mongoose, express-session 
+//  3. Create login and logout routes
+//  4. Pass req.user value to NEW route so we can add ticket owner field 
+//  5. Add a function "isLoggedIn" in app.js(end of the file) which wiilll check if user was logged in
+        // to do so we just add isLoggedIn() into the any route we want to perform this check

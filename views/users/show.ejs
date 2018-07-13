@@ -1,14 +1,34 @@
-<% include partials/header %>
-   
-   
-    <!-- Main DIV class container -->
-     <br>
-    <div class="container index">
-        <!-- Div class row. Inside of which we will run forEach loop and print all ticket details.-->
-        <div class="row" style="margin-bottom: 40;">
-                  
+<% include ../partials/header %>
+<style>
+    #avatarImg {height: 200px; 
+                    width:200px; 
+                    border: 7px ridge white;
+                    border-radius: 15px;
+    }
+    #wrapper {text-align: center;
+                padding-top: 12%;
+    }
+    
+</style>
+    <div id='wrapper' class='container'>
+         <img id='avatarImg' src='https://pickaface.net/gallery/avatar/asimkhan56a1393327099.png'>
+          <h1>
+        User: <%= foundUser.username %>
+        <hr>
+         <a class='btn btn-lg btn-warning' href="mailto:<%= foundUser.email %>">Write email to: <%= foundUser.username %> </a> 
+        </h1>
+        
+	     					<%if(currentUser && foundUser.equals(currentUser._id)){ %>
+	     					<a class='btn btn-sm btn-primary' id='editProfileLink' href='/user/<%=foundUser._id%>/edit'>Edit profile</a>
+	     					<% } %>
+	     			<hr>
+     			<div class='container'>
+     			    <br>
+     			<h4>Latest tickets created by user: </h4>
+
+     			    <div class="row" style="margin-bottom: 40;">
           <!-- Listing all tickets using forEach loop -->
-            
+            <% let tickets= foundPosts.slice(0,6)%>
             <% tickets.forEach(function(ticket){ %>
                 <% if(ticket.state !== "arch") { %>
                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -35,12 +55,6 @@
                 <% }%>
             <% }) %>
                    
-    <!-- End of the main DIV class row -->
-    </div>
-    <hr>
-    <!-- End of the main DIV class container index -->
-    </div>
-
-
- <% include partials/footer %>
- 
+  
+     			</div>	
+    </div>  

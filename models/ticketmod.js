@@ -6,17 +6,21 @@
     (
         {       created: {type: Date, default: Date.now},
                 ticket: String,
-                fqdn:  String,
+                fqdn:  Array,
                 state: String,
                 carrier: String,
         last: String,
         next: String,
         owner: String,
-         updated: String,
-       
+        ownerId:  { type: mongoose.Schema.Types.ObjectId,
+               ref: "User"},
+
+        updated: String,
+        group: String,
+        images: Array,
         notes: String,
-        author: String,
-        comments: [
+        author:String,
+         comments: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Comment" // name of the model

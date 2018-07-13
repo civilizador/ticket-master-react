@@ -8,17 +8,36 @@
    <% var timedate=Date.now; %>
          <div class="field">
             <label>Ticket Created</label>
-                <input   required type=date name="ticket[created]">
+                <input  id='CreateDate' required type=date name="ticket[created]" >
         </div>
         
         <div class="field">
             <label>Ticket Number</label>
-                <input required type=text name="ticket[ticket]" placeholder="ticket number">
+                <input readonly="readonly" id='ticketNumber'   type=text name="ticket[ticket]" >
         </div>
-    
+        
+         <div class="field">
+            <label>Assign to Group</label>
+                <select name="ticket[group]">
+                     <% groups.forEach(function(groupName){ %>
+                     <option><%=groupName%></option>
+                     <% }) %>
+                </select>
+        </div>
+        
         <div class="field">
-            <label>FQDN</label>
-                <input required type=text  placeholder="image URL" name="ticket[fqdn]">
+            <div class="input-group">
+                                <label>Enter FQDN</label>
+                                <input id='addFqdnfield' name='addFqdnfield' type="text" class="form-control"  placeholder="Ex: 8.8.8.8 or main.office.router.rt1">
+                                <span class="input-group-btn">
+                                    <hr>
+                                    <button id='addFqdnBtn' class="btn btn-info" type="button">Add!</button>
+                                </span>
+                            </div> 
+                         <label>Affected FQDNs</label>
+                            <div  class="form-group">
+                                <textarea required  id="affectedFQDN" class="form-control nondisabledbutton" rows=5 name="ticket[fqdn]" ></textarea>
+                            </div>    
         </div>
     
         <div class="field">
@@ -33,12 +52,16 @@
         
         <div class="field">
             <label>Carrier information</label>
-                <input   type=text placeholder="Carrier information" name="ticket[carrier]">  
+               <select name="ticket[carrier]">
+                     <% carrier.forEach(function(carrier){ %>
+                     <option><%=carrier%></option>
+                     <% }) %>
+                </select>
         </div>
         
         <div class="field">
             <label>Last Action</label>
-                <input   type=text placeholder="Last Action" name="ticket[last]"> 
+                <input    type=text placeholder="Last Action" name="ticket[last]"> 
         </div>
         
         <div class="field">
@@ -48,11 +71,15 @@
         
         <div class="field">
             <label>Ticket owner</label>
-                <input  readonly="readonly" type=text placeholder="Ticket owner" name="ticket[owner]" value="<%= currentUser.username %>">  
+                <input   readonly="readonly" type=text placeholder="Ticket owner" name="ticket[owner]" value="<%= currentUser.username %>">  
+        </div>
+         <div class="field">
+            <label>Ticket owner ID</label>
+                <input   readonly="readonly" type=text placeholder="Ticket owner" name="ticket[ownerId]" value="<%= currentUser.id %>">  
         </div>
         <div class="field">
             <label>Ticket was last updated at:</label>
-               <input   type=text  name="ticket[updated]" value="<%= Date().substring(0, 16) ; %>">   
+               <input   readonly="readonly"  type=text  name="ticket[updated]" value="<%= Date().substring(0, 16) %>">   
         </div>
          
         <div class="field">
@@ -71,3 +98,24 @@
 
 
 <% include partials/footer %>
+
+
+
+<script>
+    const ticketNumber = document.getElementById("ticketNumber");
+    const fqdns = []; 
+    const addFqdnfield = document.getElementById("addFqdnfield");
+    const addFqdn = document.getElementById("addFqdnBtn");
+    const affectedFQDN = document.getElementById("affectedFQDN");
+        addFqdn.addEventListener("click",function(){
+            if (fqdns.indexOf(addFqdnfield.value)==-1){
+                fqdns.push(addFqdnfield.value)
+                affectedFQDN.value =  fqdns;
+            }
+            else {alert('already added this fqdn!')}
+        })
+    
+    
+    ticketNumber.value='<%= ticketNumber %>'
+
+    </script>

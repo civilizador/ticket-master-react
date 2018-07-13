@@ -1,58 +1,38 @@
 <% include partials/header %>
-
+<h1> <%= msg %> </h1>
 <div style="font-size: 2em;" class="ui main container ">
 
 <div class="ui raised segment">
       
-   <% if (ticket.state==="monitoring") { %>
-    <div class="panel-heading" style="background-color:  #f7cc56;">
-   <% }  else if (ticket.state==="external") { %> 
-    <div class="panel-heading" style="background-color:  #bce8f1;">
-   <% } else { %> 
-    <div class="panel-heading" style="background-color:  #eab9c2;">
-   <% }  %>  
+
+ 
+    <ul class="list-group">
+        <% if (ticket.state==="monitoring") { %>
+            <li  style="background-color:  #f7cc56; font-size: 1.4em" class="list-group-item active"><a style = 'color: white' class="header  pull-right" class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></li>
+               <% }  else if (ticket.state==="external") { %> 
+                    <li  style="background-color: #bce8f1; font-size: 1.4em" class="list-group-item active"><a style = 'color: white' class="header  pull-right" class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></li>
+                <% } else { %> 
+                                  <li  style="background-color:#eab9c2; font-size: 2.2em; " class="list-group-item active"><a  style = 'color: white' class="header  pull-right" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></li>
+            <% }  %>    
       
-        <h2 class="panel-title"><div class="ui container huge header"> <a class="header" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></div> </h2>
-        </div>
-            <div class="panel-body" style="font-size: 1.5em">
-      
-                    <div class="content"> 
-                    <span style="text-decoration: underline">Created: <em><%= JSON.stringify(ticket.created).substring(1, 11) %></span> </em> 
-                    </div> 
-               
-                
-                <div class="description">
-                   <span>FQDN: </span>   <h3 class="fields"><%= ticket.fqdn %></h3>
-                </div>
-                
-                <div class="description">
-                 <span>State: </span>  <h3 class="fields"><%= ticket.state %></h3>
-                </div>
-                
-                <div class="description">
-                    <span>Carrier: </span> <h3 class="fields"><%= ticket.carrier %></h3>
-                </div>
-                
-                <div class="description">
-                    <span>Last Action: </span> <h3 class="fields"><%= ticket.last %></h3>
-                </div>
-                
-                <div class="description">
-                     <span>Next Action:  </span> <h3 class="fields"><%= ticket.next %></h3>
-                </div>
+         
+                           <% const fqdnList = (JSON.stringify(ticket.fqdn)).split(',')%> 
+                              <li class="list-group-item"> <span> Created at: </span>  <%= JSON.stringify(ticket.created).substring(1, 11) %> <span class='pull-right'>owner:      <a   href="/user/<%= ticket.ownerId%>"><%= ticket.owner%>  </a>  </span>   </li>
+                              <li class="list-group-item"> <span>Last Updated: </span>  <h5 class="fields"><%= JSON.stringify(ticket.updated) %></h5> </li>
+
+                              <li class="list-group-item"> <span> FQDN: </span><h5 class="fields"> <%= fqdnList[0].substring(2, fqdnList[0].length) %> <br> <%= fqdnList[1].substring(0, fqdnList[0].length-2)  %> </h5> </li>
+                              <li class="list-group-item"> <span> Assign to Group: </span><h5 class="fields"> <%= ticket.group %>  </h5></li>
+                              <li class="list-group-item"> <span> Ticket status: </span><h5 class="fields"> <%= ticket.state %>  </h5></li>
+                              <li class="list-group-item"> <span> Carier Information: </span><h5 class="fields"> <%= ticket.carrier %>  </h5> </li>
+                              <li class="list-group-item"> <span> Ticket Last Action: </span> <h5 class="fields"> <%= ticket.last.substring(0,47) + "..." %>  </h5> </li>
+                              <li class="list-group-item"> <span> Ticket Next Action: </span> <h5 class="fields"> <%= ticket.next.substring(0,67) + "..." %>   </h5> </li>
+                              <li class="list-group-item"> <span> Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3> </li>
+
+                        </ul>
+                        <br>
                 
                 
-                <div class="description">
-                     <span>Ticket owner: </span>  <h3 class="fields"><%= ticket.owner %></h3>
-                </div>
-                
-                <div class="description">
-                     <span>Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3>
-                </div>
-                
-                <div class="description">
-                     <span>Last Updated: </span>  <h3 class="fields"><%= JSON.stringify(ticket.updated).substring(1, 11) ; %></h3>
-                </div>
+                <hr>
                 
                 <a href="/tickets/<%=ticket._id%>/edit" class="ui olive button">Edit ticket</a>
                 
@@ -118,3 +98,14 @@
      </div>
      
 <% include partials/footer %>
+
+
+
+
+
+
+
+
+
+
+
