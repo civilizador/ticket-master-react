@@ -23,7 +23,7 @@
                            <% }  %>  
                            <% const fqdnList = (JSON.stringify(ticket.fqdn)).split(',')%> 
                               <li class="list-group-item"> <span> Created at: </span>  <%= JSON.stringify(ticket.created).substring(1, 11) %> <span class='pull-right'>owner:      <a   href="/user/<%= ticket.ownerId%>"><%= ticket.owner%>  </a>  </span>   </li>
-                              <li class="list-group-item"> <span> FQDN: </span><h5 class="fields"> <%= fqdnList[0].substring(2, 24)+"..."  %> <br> <%= fqdnList[1].substring(1, 24)+"..."  %> </h5> </li>
+                              <li class="list-group-item"> <span> FQDN: </span><h5 class="fields"> <%= fqdnList[0].substring(2, 24)+"..."  %> <br> <%= fqdnList[1].substring(0, fqdnList[1].length-2)+"..."  %> </h5> </li>
                               <li class="list-group-item"> <span> Assign to Group: </span><h5 class="fields"> <%= ticket.group %>  </h5></li>
                               <li class="list-group-item"> <span> Ticket status: </span><h5 class="fields"> <%= ticket.state %>  </h5></li>
                               <li class="list-group-item"> <span> Carier Information: </span><h5 class="fields"> <%= ticket.carrier %>  </h5> </li>
