@@ -14,7 +14,6 @@
         owner: String,
         ownerId:  { type: mongoose.Schema.Types.ObjectId,
                ref: "User"},
-
         updated: String,
         group: String,
         images: Array,

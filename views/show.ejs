@@ -1,10 +1,9 @@
 <% include partials/header %>
-<h1> <%= msg %> </h1>
+ 
+
 <div style="font-size: 2em;" class="ui main container ">
 
 <div class="ui raised segment">
-      
-
  
     <ul class="list-group">
         <% if (ticket.state==="monitoring") { %>
@@ -14,26 +13,45 @@
                 <% } else { %> 
                                   <li  style="background-color:#eab9c2; font-size: 2.2em; " class="list-group-item active"><a  style = 'color: white' class="header  pull-right" href="/tickets/<%=ticket._id%>"> <%= ticket.ticket %> </a></li>
             <% }  %>    
-      
-         
                            <% const fqdnList = (JSON.stringify(ticket.fqdn)).split(',')%> 
-                              <li class="list-group-item"> <span> Created at: </span>  <%= JSON.stringify(ticket.created).substring(1, 11) %> <span class='pull-right'>owner:      <a   href="/user/<%= ticket.ownerId%>"><%= ticket.owner%>  </a>  </span>   </li>
-                              <li class="list-group-item"> <span>Last Updated: </span>  <h5 class="fields"><%= JSON.stringify(ticket.updated) %></h5> </li>
-
-                              <li class="list-group-item"> <span> FQDN: </span><h5 class="fields"> <%= fqdnList[0].substring(2, fqdnList[0].length) %> <br> <%= fqdnList[1].substring(0, fqdnList[0].length-2)  %> </h5> </li>
-                              <li class="list-group-item"> <span> Assign to Group: </span><h5 class="fields"> <%= ticket.group %>  </h5></li>
-                              <li class="list-group-item"> <span> Ticket status: </span><h5 class="fields"> <%= ticket.state %>  </h5></li>
-                              <li class="list-group-item"> <span> Carier Information: </span><h5 class="fields"> <%= ticket.carrier %>  </h5> </li>
-                              <li class="list-group-item"> <span> Ticket Last Action: </span> <h5 class="fields"> <%= ticket.last.substring(0,47) + "..." %>  </h5> </li>
-                              <li class="list-group-item"> <span> Ticket Next Action: </span> <h5 class="fields"> <%= ticket.next.substring(0,67) + "..." %>   </h5> </li>
-                              <li class="list-group-item"> <span> Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3> </li>
-
-                        </ul>
+                                <li class="list-group-item"> <span> Created at: </span>  <%= JSON.stringify(ticket.created).substring(1, 11) %> <span class='pull-right'>owner:      <a   href="/user/<%= ticket.ownerId%>"><%= ticket.owner%>  </a>  </span>   </li>
+                                <li class="list-group-item"> <span>Last Updated: </span>  <h5 class="fields"><%= JSON.stringify(ticket.updated) %></h5> </li>
+                                <li id ='hosts' class="list-group-item"> <span> FQDN: </span>
+                                    <h5 style='text-align:center;' id="h5Hosts" class="fields">
+                                    </h5>
+                                      <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-outline-dark pull-right" data-toggle="modal" data-target="#exampleModal">
+                                            Ping Test Details
+                                        </button>
+                                </li>
+                                <!-- Modal with ping test details -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div id='modalBody' class="modal-body">
+                                              </div>
+                                              <div class="modal-footer">
+                                                 <button type="button" data-dismiss="modal" class="btn btn-outline-dark">Close</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                 <!-- Modal -->
+                                <li class="list-group-item"> <span> Assign to Group: </span><h5 class="fields"> <%= ticket.group %>  </h5></li>
+                                <li class="list-group-item"> <span> Ticket status: </span><h5 class="fields"> <%= ticket.state %>  </h5></li>
+                                <li class="list-group-item"> <span> Carier Information: </span><h5 class="fields"> <%= ticket.carrier %>  </h5> </li>
+                                <li class="list-group-item"> <span> Ticket Last Action: </span> <h5 class="fields"> <%= ticket.last.substring(0,47) + "..." %>  </h5> </li>
+                                <li class="list-group-item"> <span> Ticket Next Action: </span> <h5 class="fields"> <%= ticket.next.substring(0,67) + "..." %>   </h5> </li>
+                                <li class="list-group-item"> <span> Ticket notes: </span>  <h3 class="fields"><%= ticket.notes %></h3> </li>
+    </ul>
                         <br>
-                
-                
                 <hr>
-                
                 <a href="/tickets/<%=ticket._id%>/edit" class="ui olive button">Edit ticket</a>
                 
                 <form style="display: inline" action="/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
@@ -45,8 +63,8 @@
 </div>
             
                 <!-- COMMENTS -->
-                
     <div class="ui raised segment">
+        <div class='container'>                
                     <!-- displaying all comments -->
         <div style="font-size: 1.5em;" class="ui feed">
             
@@ -58,14 +76,12 @@
                 
                 <div class="content">
                         <!--//     AUTHOR STAMP on the COMMENT PRINT OUT-->
-                        
                     <div class="summary">
                        <h3 style="font-family: Times; color: #5776a8;"> <%= comments.author.username %>  </h3>
                     </div>
                     
                     <div class="date">
                         <!--//     TIME STAMPS ON THE COMMENTS in Eastern time. .getHours() gives time in UTC so we -4 from .getHours() result. -->
-                        
                        <strong> Created on: <%=  JSON.stringify(comments.created).substring(1, 17)    %>  </strong>
                     </div>
                     
@@ -73,8 +89,6 @@
                         <strong> <%= comments.text %> : </strong>
                     </div>
                 </div> 
-                
-                
             </div>
         <% }); %>      
         </div>      
@@ -92,20 +106,35 @@
             </div>
             
         </div>
-        
+</div>
+
         </div>
     </div>
      </div>
      
 <% include partials/footer %>
 
+ 
+ 
+<script>
 
-
-
-
-
-
-
+    let pingTest =  <%- msg %> 
+            function showPing(){
+                for(let i=0; i<pingTest.length; i++){
+                         if(pingTest[i].alive == true){ 
+                            $('#hosts').html( $('#hosts').html()+ "<h4 style='color:green'>" + "<i style='color:green' class='fa fa-arrow-circle-up'></i>" + pingTest[i].host +"</h4><br>"   )
+                            $('#modalBody').html(   $('#modalBody').html() +"<h3 style='color:green; overflow: scroll;'>"+JSON.stringify(pingTest[i]) + '</h3><br>')
+                         } else { 
+                             $('#hosts').html( $('#hosts').html()+ "<h4 style='color:red'>" + "<i style='color:red' class='fa fa-arrow-circle-down'></i>" + pingTest[i].host +"</h4><br>"   )
+                            $('#modalBody').html(   $('#modalBody').html() +"<h3 style='color:red; overflow: scroll;'>"+JSON.stringify(pingTest[i]) + '</h3><br>')
+                        }
+                 }  
+                 $('#exampleModalLabel').html('Ping Test Results: ')
+            }
+    
+    
+   showPing()
+</script>
 
 
 
