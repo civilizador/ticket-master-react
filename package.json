@@ -1,5 +1,6 @@
 {
   "name": "shift_to",
+  "engines" : { "node" : ">=8" } ,
   "version": "1.0.0",
   "description": "ticket turnover app",
   "main": "app.js",
