@@ -1,0 +1,56 @@
+<% include ../partials/header     %>
+
+
+    
+    <div  style="margin-top: 10vh;"  class="container">
+            <form  style="width: 80 %;" class="ui form" action="/user/<%=foundUser._id%>?_method=PUT" method="POST">
+      <div class="field">
+        <label>User Name</label>
+        <input  required type="text" name="userDet[username]" placeholder="<%foundUser.username%>" >
+      </div>
+      <div class="field">
+       <!-- Password field -->
+            Password: <input type="password" onfocus="this.value=''"  name="userDet[password]"  value="FakePSW" class="myInput">
+      </div>
+ 
+         <div class="field">
+            <label>email</label>
+            <input  required type="text" name="userDet[email]" placeholder="<%foundUser.email%>">
+          </div>
+      
+           <div class="field">
+            <div>
+              <input required type="checkbox"  >
+              <label style="padding-top: 3px;">I agree to the Terms and Conditions</label>
+            </div>
+          </div>
+    
+     <div class="field">
+        <label>Group</label>
+        <select name="userDet[group]">
+                         <% groups.forEach(function(group){ %>
+                         <option><%=group%></option>
+                         <% }) %>
+                    </select>  </div>
+      
+      <div class="field">
+        <label>Avatar URL</label>
+        <input  required type="text" name="userDet[avatar]" placeholder="avatarUrl">
+      </div>
+      
+      <div class="g-recaptcha" data-sitekey="6LfHkU8UAAAAAEloQAoHwUgwjkBmiHjUdltNWLoW"></div>
+      <br/>
+   
+ 
+      <input class="ui button" type="submit">
+   
+    </form>
+    
+    
+</div>
+
+
+
+
+
+<% include ../partials/footer %>

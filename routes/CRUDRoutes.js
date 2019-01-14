@@ -18,13 +18,13 @@
                     Shift.find({ticket: regex}, function(err, tickets)
                         {
                             if(err) {   throw err   }
-                                else{res.render("index",{tickets: tickets}); }
+                                else{res.render("index",{tickets: tickets,currentUser:req.user}); }
                        });
             }
                 else{
                     Shift.find({}, function(err, tickets){
                             if(err) {throw err}
-                            else{ res.render("index",{tickets: tickets}); }
+                            else{ res.render("index",{tickets: tickets,currentUser:req.user}); }
                         });
                     } 
         });  
@@ -32,27 +32,44 @@
     
           //1i. INDEX ROUTE - Filtered tickets
         
-            app.get("/tickets/external",function(req,res)
-        {   Shift.find({'state': 'external' }, function(err, tickets)
-        {if(err) {throw err}
-        else{ res.render("index",{tickets: tickets}); }
-             });
-        });
+            app.get("/tickets/external",function(req,res){
+                Shift.find({'state': 'external'}, function(err, tickets){
+                    if(err) {throw err} else { res.render("index",{tickets: tickets}); }
+                });
+            });
  
-            app.get("/tickets/arch",function(req,res)
-        {   Shift.find({'state': 'archive'}, function(err, tickets)
-        {if(err) {throw err}
-        else{ res.render("index",{tickets: tickets}); }
-             });
-        });
+            app.get("/tickets/arch",function(req,res){
+                Shift.find({'state': 'archive'}, function(err, tickets){
+                    if(err) {throw err} else { res.render("index",{tickets: tickets}); }
+                });
+            });
  
-            app.get("/tickets/monitoring",function(req,res)
-        {   Shift.find({'state': 'monitoring'}, function(err, tickets)
-        {if(err) {throw err}
-        else{ res.render("index",{tickets: tickets}); }
-             });
-        });
-        
+            app.get("/tickets/monitoring",function(req,res){
+                Shift.find({'state': 'monitoring'}, function(err, tickets){
+                    if(err) {throw err} else { res.render("index",{tickets: tickets}); }
+                });
+            });
+           
+            app.get("/tickets/mytickets", middleware.isLoggedIn, function(req,res){
+                    Shift.find({'owner': req.user.username}).exec(function(err,tickets){
+                        if(err) {throw err}else{ 
+                            res.render("index",{tickets: tickets}); 
+                        }
+                    });
+                });  
+                
+            app.get("/tickets/mygroup", middleware.isLoggedIn, async function(req,res){
+                User.find({'owner': req.user.username}, function(err, foundUser) {
+                    if(err) {throw err}
+                        else{ 
+                            Shift.find( {'group': foundUser.group} ).exec( function(err,tickets){
+                                if(err) {throw err}
+                                    else{  res.render("index",{tickets: tickets});  }   
+                            });
+                        }
+                });
+            });
+          
         //2. "NEW" ROUTE
         app.get("/tickets/new", middleware.isLoggedIn, function(req, res) {
               const ticketNumber = Math.random().toString(16).substring(5).toUpperCase()+( Math.floor( Math.random() * 100000 ) ) ;
@@ -75,10 +92,14 @@
         //4. "SHOW" ROUTE.
           app.get("/tickets/:id", async function (req, res) {
           let foundTicket = await Shift.findById(req.params.id).populate("comments").exec()
-          let hosts = (JSON.stringify(foundTicket.fqdn)).split(',').map((h) => h.replace(/[^0-9.]/g, ''));
+          let hosts = ( JSON.stringify(foundTicket.fqdn) )
+          console.log(hosts)
+          let host1 = hosts.substring(2,hosts.length-2).split(',')
+          console.log(host1)
+        //   .map((h) => h.replace(/[^0-9.]/g, ''));
           let msg=[];
            await Promise.all(
-            hosts.map((host) => (
+            host1.map((host) => (
              ping.promise.probe(host)
                     .then(function (res) {
                         console.log(res);
@@ -88,10 +109,11 @@
             ))
           )  ;
           
-           res.render("show", {
+            res.render("show", {
             ticket: foundTicket,
             user: req.user,
             msg: JSON.stringify(msg),
+            currentUser: req.user,
           })
         });
       

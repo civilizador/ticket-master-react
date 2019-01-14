@@ -7,10 +7,10 @@ const  flash    =         require("connect-flash");
 
 
  //  REGISTER ROUTE
-    module.exports = (app) => {
+    module.exports = function (app) {
           //   show register form page
             app.get("/register",function(req, res) {
-                res.render("register");
+                res.render("users/register");
             });
        
         //   handle sign up logic
@@ -26,7 +26,7 @@ const  flash    =         require("connect-flash");
           User.register(newUser, req.body.password, function(err, user) {
             if (err) {
               console.log(err.message);
-              return res.render("register", { error: err.message });
+              return res.render("users/register", { error: err.message });
             }
             passport.authenticate("local")(req, res, function() {
               req.flash("success", "Welcome to Shift TO" + " " + user.username);
@@ -71,21 +71,20 @@ const  flash    =         require("connect-flash");
     }
     
     
-    // USER ROUTE 
-         app.get("/user/:id", function(req, res){
-          User.findById(req.params.id, function(err, foundUser) {
-           if(err) {req.flash("error","something is wrong")
-             res.redirect("/")
-         }
-         else {
-          Shift.find().where('ownerId').equals(foundUser._id).exec(function(err,posts){
-            if(err) {req.flash("error","something is wrong")}
-              res.render("./users/show",{foundUser:foundUser,foundPosts:posts,currentUser:req.user});  
-          })  
-        } 
-      })
-        }
-        );
+    // USER SHOW ROUTE 
+        app.get("/user/:id", function(req, res){
+            User.findById(req.params.id, function(err, foundUser) {
+                if(err) {
+                    req.flash("error","something is wrong")
+                    res.redirect("/")
+                } else {
+                    Shift.find().where('ownerId').equals(foundUser._id).exec(function(err,posts){
+                        if(err) {req.flash("error","something is wrong")}
+                        res.render("users/show",{foundUser:foundUser,foundPosts:posts,currentUser:req.user});  
+                    });  
+                } 
+            })
+        });
          
          // USER Edit FORM
         app.get("/user/:id/edit", function(req, res){
@@ -94,7 +93,7 @@ const  flash    =         require("connect-flash");
                if(err) {req.flash("error","something is wrong")
                 res.redirect("/")
             }else {
-                res.render("./users/edit",{foundUser:foundUser,groups:groups});  
+                res.render("users/editUser",{foundUser:foundUser,groups:groups});  
                     } 
              })
         });

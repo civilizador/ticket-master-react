@@ -5,7 +5,8 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     avatar : String,
-    email: String
+    email: String,
+    group: String
 });
 //  adds additional methods from passportLocalMongoose to our User Schema.
 UserSchema.plugin(passportLocalMongoose);
