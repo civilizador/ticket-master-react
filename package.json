@@ -1,23 +1,30 @@
 {
   "name": "shift_to",
-  "engines" : { "node" : "=10" } ,
+  "engines": {
+    "node": "=10"
+  },
   "version": "1.0.0",
   "description": "ticket turnover app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Asim Salimli",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "bufferutil": "4.0.1",
+    "concurrently": "^4.1.0",
     "connect": "^3.6.6",
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
+    "http-proxy-middleware": "^0.19.1",
     "method-override": "^2.3.10",
     "mongoose": "^5.0.6",
     "nodemon": "^1.18.4",
@@ -26,6 +33,7 @@
     "passport-local-mongoose": "^5.0.0",
     "ping": "^0.2.2",
     "request": "^2.88.0",
-    "ws": "^6.1.2"
+    "utf-8-validate": "5.0.2",
+    "ws": "6.1.3"
   }
 }

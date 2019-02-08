@@ -43,4 +43,4 @@
     require('./routes/commentsRoutes')(app);
 
          
-    app.listen(process.env.PORT,process.env.IP,function(){console.log("Server had been started")});
+    app.listen(5000 || process.env.PORT,process.env.IP,function(){console.log("Server had been started")});
